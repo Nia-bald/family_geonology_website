@@ -29,10 +29,18 @@ class GenealogyTree {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             this.originalData = await response.json();
-            this.data = this.originalData;
+            this.addIsHiddenProperty(this.originalData);
+            this.data = this.originalData;  
         } catch (error) {
             console.error('Error loading data:', error);
             throw error;
+        }
+    }
+
+    addIsHiddenProperty(node) {
+        node.isHidden = false;
+        if (node.children) {
+            node.children.forEach(child => this.addIsHiddenProperty(child));
         }
     }
 
@@ -201,6 +209,7 @@ class GenealogyTree {
             levelDiv.className = 'level';
             
             levelNodes.forEach(nodeData => {
+                if (nodeData.node.isHidden) return;
                 const nodeElement = this.createOrgNode(nodeData.node, nodeData.level);
                 levelDiv.appendChild(nodeElement);
             });
@@ -304,6 +313,7 @@ class GenealogyTree {
         } else {
             // Collapse the node
             this.collapsedNodes.add(nodeName);
+            this.unhideSiblings(nodeName);
         }
         
         // Re-render the tree with updated state
@@ -318,6 +328,18 @@ class GenealogyTree {
             parent.children.forEach(child => {
                 if (child.name !== nodeName) {
                     this.collapsedNodes.add(child.name);
+                    child.isHidden = true;
+                }
+            });
+        }
+    }
+
+    unhideSiblings(nodeName) {
+        const parent = this.findParentNode(this.data, nodeName);
+        if (parent && parent.children) {
+            parent.children.forEach(child => {
+                if (child.name !== nodeName) {
+                    child.isHidden = false;
                 }
             });
         }
