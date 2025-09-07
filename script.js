@@ -55,6 +55,7 @@ class GenealogyTree {
             // Don't collapse the root node - keep its children visible by default
             if (!isRoot) {
                 this.collapsedNodes.add(node.name);
+                node.isHidden = false;
             }
             node.children.forEach(child => {
                 this.addAllNodesToCollapsed(child, false);
@@ -142,6 +143,14 @@ class GenealogyTree {
 
             // Reset collapsed state for the new tree
             this.collapsedNodes.clear();
+            // Set isHidden to false for all nodes in the new tree
+            function setIsHiddenFalse(node) {
+                node.isHidden = false;
+                if (node.children && node.children.length > 0) {
+                    node.children.forEach(child => setIsHiddenFalse(child));
+                }
+            }
+            setIsHiddenFalse(this.data);
             this.initializeCollapsedState();
 
             // Re-render the tree
@@ -162,6 +171,14 @@ class GenealogyTree {
 
         // Reset collapsed state
         this.collapsedNodes.clear();
+        // Set isHidden to false for all nodes in the tree
+        function setAllIsHiddenFalse(node) {
+            node.isHidden = false;
+            if (node.children && node.children.length > 0) {
+                node.children.forEach(child => setAllIsHiddenFalse(child));
+            }   
+        }
+        setAllIsHiddenFalse(this.data);
         this.initializeCollapsedState();
 
         // Re-render the tree
@@ -314,6 +331,14 @@ class GenealogyTree {
         } else {
             // Collapse the node
             this.collapsedNodes.add(nodeName);
+            // Set isHidden to false for all nodes in the tree
+            function setAllNodesVisible(node) {
+                node.isHidden = false;
+                if (node.children && node.children.length > 0) {
+                    node.children.forEach(child => setAllNodesVisible(child));
+                }
+            }
+            setAllNodesVisible(this.data);
             this.unhideSiblings(nodeName);
         }
 
@@ -329,6 +354,7 @@ class GenealogyTree {
             parent.children.forEach(child => {
                 if (child.name !== nodeName) {
                     this.collapsedNodes.add(child.name);
+                    child.isHidden = false;
                     child.isHidden = true;
                 }
             });
