@@ -24,11 +24,12 @@ class GenealogyTree {
 
     async loadData() {
         try {
-            const response = await fetch('/geneology.json');
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            this.originalData = await response.json();
+            // const response = await fetch('/geneology.json');
+            // if (!response.ok) {
+            //     throw new Error(`HTTP error! status: ${response.status}`);
+            // }
+            // Use the local geneology_json variable instead of fetching from file
+            this.originalData = GenealogyData.data;
             this.addIsHiddenProperty(this.originalData);
             this.data = this.originalData;  
         } catch (error) {
@@ -605,3 +606,160 @@ class GenealogyTree {
 document.addEventListener('DOMContentLoaded', () => {
     new GenealogyTree();
 });
+
+
+class GenealogyData {
+    static data = {
+        "name": "Tani",
+        "children": [
+          {
+            "name": "Nisi",
+            "children": [
+              {
+                "name": "Sidum",
+                "children": [
+                  {
+                    "name": "Dumde",
+                    "children": [
+                      {
+                        "name": "De",
+                        "children": [
+                          {
+                            "name": "Eyu",
+                            "children": [
+                              {
+                                "name": "Yubo",
+                                "children": [
+                                  {
+                                    "name": "Boji",
+                                    "children": [
+                                      {
+                                        "name": "Jini"
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Bore",
+                                    "children": [
+                                      {
+                                        "name": "Reyu",
+                                        "children": [
+                                          {
+                                            "name": "Yumen",
+                                            "children": [
+                                              {
+                                                "name": "Menpe",
+                                                "children": [
+                                                  {
+                                                    "name": "Peke",
+                                                    "children": [
+                                                      {
+                                                        "name": "Ketu",
+                                                        "children": [
+                                                          {
+                                                            "name": "Tudo",
+                                                            "children": [
+                                                              {
+                                                                "name": "Doyom",
+                                                                "children": [
+                                                                  {
+                                                                    "name": "Yomba",
+                                                                    "children": []
+                                                                  }
+                                                                ]
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "name": "Menba",
+                                                "children": [
+                                                  {
+                                                    "name": "Badak",
+                                                    "children": [
+                                                      {
+                                                        "name": "Dakram",
+                                                        "children": [
+                                                          {
+                                                            "name": "Ramka",
+                                                            "children": [
+                                                              {
+                                                                "name": "Kali"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              },
+                                              {
+                                                "name": "Menbom"
+                                              },
+                                              {
+                                                "name": "Menbi",
+                                                "children": [
+                                                  {
+                                                    "name": "Bini",
+                                                    "children": [
+                                                      {
+                                                        "name": "Nido",
+                                                        "children": [
+                                                          {
+                                                            "name": "Dori",
+                                                            "children": [
+                                                              {
+                                                                "name": "Riji"
+                                                              }
+                                                            ]
+                                                          }
+                                                        ]
+                                                      }
+                                                    ]
+                                                  }
+                                                ]
+                                              }
+                                            ]
+                                          }
+                                        ]
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Boa",
+                                    "children": [
+                                      {
+                                        "name": "Ango",
+                                        "children": []
+                                      }
+                                    ]
+                                  },
+                                  {
+                                    "name": "Boi",
+                                    "children": [
+                                      {
+                                        "name": "Ingo"
+                                      }
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    }
