@@ -264,8 +264,38 @@ main {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    margin-top: 20px;
+    margin-top: 40px;
     position: relative;
+    gap: 40px; /* space between siblings */
+}
+
+/* Remove vertical stacking lines */
+.org-node::after {
+    display: none;
+}
+
+/* Add connector line from parent to children */
+.children-level::before {
+    content: '';
+    position: absolute;
+    top: -20px;  /* position just above the children */
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #a67c52;
+    z-index: 1;
+}
+
+/* Connector from parent node down to the horizontal line */
+.org-node.parent > .children-level::after {
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    width: 2px;
+    height: 20px;
+    background: #a67c52;
+    z-index: 1;
 }
 
 .children-level.collapsed {
@@ -372,4 +402,103 @@ footer {
 
 footer p {
     margin: 0;
+}
+/* Extra Mobile Friendly Adjustments */
+@media (max-width: 768px) {
+    .container {
+        padding: 8px;
+    }
+
+    header {
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.6rem;
+        line-height: 1.3;
+    }
+
+    .search-container {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    #searchInput {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 14px;
+        padding: 10px;
+    }
+
+    .level {
+        flex-direction: column;
+        align-items: center;
+        margin: 30px 0;
+    }
+
+    .org-node {
+        margin: 8px 0;
+    }
+
+    .node-box {
+        min-width: 120px;
+        max-width: 90vw;
+        padding: 12px 15px;
+        font-size: 14px;
+        word-wrap: break-word;   /* wrap long names */
+        white-space: normal;
+    }
+
+    .node-name {
+        font-size: 15px;
+    }
+
+    .node-title {
+        font-size: 11px;
+    }
+
+    .children-count {
+        font-size: 10px;
+        padding: 2px 5px;
+    }
+
+    .org-node::after,
+    .org-node + .org-node::before {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
+    }
+
+    h1 {
+        font-size: 1.3rem;
+    }
+
+    .node-box {
+        min-width: 100px;
+        max-width: 85vw;
+        padding: 10px 12px;
+    }
+
+    .node-name {
+        font-size: 14px;
+    }
+
+    button {
+        font-size: 13px;
+        padding: 8px;
+    }
+
+    #searchInput {
+        font-size: 13px;
+        padding: 8px 12px;
+    }
 }
